@@ -1,0 +1,9 @@
+{
+  "require" : {
+    "monolog/monolog": "~1.7",
+    "twig/twig": "^1.22",
+  },
+  // "require-dev": {
+  //   "heroku/heroku-buildpack-php": "*"
+  // }
+}
