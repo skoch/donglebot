@@ -1,6 +1,7 @@
 <?php
 
   $dongles = get_dongles();
+  echo "<pre>"; print_r( "DONGLEBOT" ); echo "</pre>";
   echo "<pre>"; print_r( array( '$dongles' => $dongles ) ); die( "</pre>" );
 
   function get_dongles()
