@@ -1,24 +1,30 @@
 <?php
 
-  $dongles = get_dongles();
-  echo "<pre>"; print_r( "DONGLEBOT" ); echo "</pre>";
-  echo "<pre>"; print_r( array( '$dongles' => $dongles ) ); die( "</pre>" );
-
-  function get_dongles()
+  if( isset( $_GET['n'] ) )
   {
-    $dongles = array();
-    $csv = "https://docs.google.com/spreadsheets/d/1_yiCbDyfTzQcixWZR8Yl_yjGjT2wBgAcJRZ8aw1o1qw/pub?output=csv";
-    // $row = 1;
-    if( ( $handle = fopen( $csv, "r" ) ) !== FALSE )
+    $name = $_GET['n'];
+
+    if( strpos( $_SERVER['HTTP_HOST'], 'herokuapp.com' ) !== false )
     {
-      while( ( $data = fgetcsv( $handle, 1000, "," ) ) !== FALSE )
-      {
-        // $dongles[] = htmlentities( $data[0] );
-        $dongles[$data[0]] = $data[1];
-      }
-      fclose( $handle );
+      echo "<pre>"; print_r( 'heroku' ); echo "</pre>";
+      $m = new MongoClient( 'mongodb://skoch:n%Ub2yk.2?Ei>2B6FnLKP@ds045464.mongolab.com:45464/heroku_70gfb9l5' );
+      $db = $m->heroku_70gfb9l5;
+      $dongbot_collection = $db->dongles;
+    }else
+    {
+      $m = new MongoClient();
+      $db = $m->dongles;
+      $dongbot_collection = $db->dongbot;
     }
 
-    return $dongles;
+    $dongle = $dongbot_collection->findOne(
+      array( "Name" => $name )
+    );
+    echo "<pre>"; print_r( array( '$dongle' => $dongle['Donger']) ); echo "</pre>";
+  }else
+  {
+    echo "<pre>"; print_r( 'choose again' ); echo "</pre>";
   }
+
+
 ?>
