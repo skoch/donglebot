@@ -1,23 +1,42 @@
 <?php
 
-  $dongles = get_dongles();
-  echo "<pre>"; print_r( array( '$dongles' => $dongles ) ); die( "</pre>" );
+  $payload = array();
+  $text = '---';
 
-  function get_dongles()
+  if( isset( $_POST['token'] ) && $_POST['token'] == 'PIJ8vEkgOnoDIpmaiK4ynkJj' )
   {
-    $dongles = array();
-    $csv = "https://docs.google.com/spreadsheets/d/1_yiCbDyfTzQcixWZR8Yl_yjGjT2wBgAcJRZ8aw1o1qw/pub?output=csv";
-    // $row = 1;
-    if( ( $handle = fopen( $csv, "r" ) ) !== FALSE )
-    {
-      while( ( $data = fgetcsv( $handle, 1000, "," ) ) !== FALSE )
-      {
-        // $dongles[] = htmlentities( $data[0] );
-        $dongles[$data[0]] = $data[1];
-      }
-      fclose( $handle );
-    }
+    $channel = $_POST['channel_name'];
+    $name = isset( $_POST['text'] ) ? $_POST['text'] : 'excuseme';
 
-    return $dongles;
+    $uri = 'mongodb://skoch:n%Ub2yk.2?Ei>2B6FnLKP@ds045464.mongolab.com:45464/heroku_70gfb9l5';
+    $options = array( 'connectTimeoutMS' => 30000 );
+    $m = new MongoClient( $uri, $options );
+    $db = $m->heroku_70gfb9l5;
+    $dongbot_collection = $db->dongles;
+
+    $dongle = $dongbot_collection->findOne(
+      array( "Name" => $name )
+    );
+
+    $text = $dongle['Donger'];
+    // $payload['channel'] = "#$channel";
+
+    // echo "<pre>"; print_r( array( '$dongle' => $dongle['Donger']) ); echo "</pre>";
   }
+
+  $payload['text'] = $text;
+
+  $url = 'https://hooks.slack.com/services/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';
+  $vars = 'payload=' . json_encode( $payload );
+
+  $ch = curl_init( $url );
+  curl_setopt( $ch, CURLOPT_POST, 1 );
+  curl_setopt( $ch, CURLOPT_POSTFIELDS, $vars );
+  curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1 );
+  curl_setopt( $ch, CURLOPT_HEADER, 0 );
+  curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+
+  $response = curl_exec( $ch );
+
+
 ?>
