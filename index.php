@@ -9,7 +9,6 @@
     // $name = $_GET['n'];
     $name = isset( $_POST['text'] ) ? $_POST['text'] : 'excuseme';
 
-    error_log("name = $name");
     $uri = 'mongodb://skoch:n%Ub2yk.2?Ei>2B6FnLKP@ds045464.mongolab.com:45464/heroku_70gfb9l5';
     $options = array( 'connectTimeoutMS' => 30000 );
     $m = new MongoClient( $uri, $options );
@@ -35,12 +34,7 @@
     );
 
     $text = $dongle['Donger'];
-    error_log("text = $text");
-    // if( $channel != 'test' )
-    // {
-    //   $payload['channel'] = "#$channel";
-    // }
-    // error_log("channel = $channel");
+    $payload['channel'] = "#$channel";
 
     // echo "<pre>"; print_r( array( '$dongle' => $dongle['Donger']) ); echo "</pre>";
   }
