@@ -35,6 +35,7 @@
     );
 
     $text = $dongle['Donger'];
+    error_log("text = $text");
     if( $channel != 'test' )
     {
       $payload['channel'] = "#$channel";
