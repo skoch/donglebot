@@ -9,19 +9,25 @@
     // $name = $_GET['n'];
     $name = isset( $_POST['text'] ) ? $_POST['text'] : 'excuseme';
 
-    if( strpos( $_SERVER['HTTP_HOST'], 'herokuapp.com' ) !== false )
-    {
-      $uri = 'mongodb://skoch:n%Ub2yk.2?Ei>2B6FnLKP@ds045464.mongolab.com:45464/heroku_70gfb9l5';
-      $options = array( 'connectTimeoutMS' => 30000 );
-      $m = new MongoClient( $uri, $options );
-      $db = $m->heroku_70gfb9l5;
-      $dongbot_collection = $db->dongles;
-    }else
-    {
-      $m = new MongoClient();
-      $db = $m->dongles;
-      $dongbot_collection = $db->dongbot;
-    }
+    $uri = 'mongodb://skoch:n%Ub2yk.2?Ei>2B6FnLKP@ds045464.mongolab.com:45464/heroku_70gfb9l5';
+    $options = array( 'connectTimeoutMS' => 30000 );
+    $m = new MongoClient( $uri, $options );
+    $db = $m->heroku_70gfb9l5;
+    $dongbot_collection = $db->dongles;
+
+    // if( strpos( $_SERVER['HTTP_HOST'], 'herokuapp.com' ) !== false )
+    // {
+    //   $uri = 'mongodb://skoch:n%Ub2yk.2?Ei>2B6FnLKP@ds045464.mongolab.com:45464/heroku_70gfb9l5';
+    //   $options = array( 'connectTimeoutMS' => 30000 );
+    //   $m = new MongoClient( $uri, $options );
+    //   $db = $m->heroku_70gfb9l5;
+    //   $dongbot_collection = $db->dongles;
+    // }else
+    // {
+    //   $m = new MongoClient();
+    //   $db = $m->dongles;
+    //   $dongbot_collection = $db->dongbot;
+    // }
 
     $dongle = $dongbot_collection->findOne(
       array( "Name" => $name )
