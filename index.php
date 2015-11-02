@@ -34,7 +34,7 @@
     );
 
     $text = $dongle['Donger'];
-    $payload['channel'] = "#$channel";
+    // $payload['channel'] = "#$channel";
 
     // echo "<pre>"; print_r( array( '$dongle' => $dongle['Donger']) ); echo "</pre>";
   }
