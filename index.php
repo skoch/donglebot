@@ -1,7 +1,7 @@
 <?php
 
   $payload = array();
-  $text = '( Y )';
+  $text = '---';
   // if( isset( $_GET['n'] ) )
   if( isset( $_POST['token'] ) && $_POST['token'] == 'PIJ8vEkgOnoDIpmaiK4ynkJj' )
   {
@@ -28,7 +28,10 @@
     );
 
     $text = $dongle['Donger'];
-    $payload['channel'] = "#$channel";
+    if( $channel != 'test' )
+    {
+      $payload['channel'] = "#$channel";
+    }
 
     // echo "<pre>"; print_r( array( '$dongle' => $dongle['Donger']) ); echo "</pre>";
   }
