@@ -40,6 +40,7 @@
     {
       $payload['channel'] = "#$channel";
     }
+    error_log("channel = $channel");
 
     // echo "<pre>"; print_r( array( '$dongle' => $dongle['Donger']) ); echo "</pre>";
   }
